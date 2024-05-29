@@ -1,4 +1,3 @@
-import React from "react";
 import "./styles.css";
 
 interface Metadata {
@@ -143,14 +142,18 @@ const EditorContainer: React.FC = () => {
       },
     ],
   };
-  const [buffers, setBuffers] = React.useState([]);
+  const [buffers, setBuffers] = React.useState<Buffer[]>([]);
   return (
     <div>
       <Directory
         dir={dir}
         openFileInEditor={openFileInEditor}
         openFileInEditor={(file) => {
-          buffers.push(file);
+          setBuffers((prev) => {
+            const new_arr = [...prev];
+            new_arr.push(file);
+            return new_arr;
+          });
         }}
       />
       <FileDisplayer buffers={buffers} />
